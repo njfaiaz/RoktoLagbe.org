@@ -1,0 +1,119 @@
+<?php
+
+use App\Http\Controllers\Admin\AddressController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DonateHistoryController;
+use App\Http\Controllers\Admin\PasswordChangeController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserListController;
+use App\Http\Controllers\Frontend\FrDonateInfoController;
+use App\Http\Controllers\Frontend\FrFakeUserController;
+use App\Http\Controllers\Frontend\FrHistoryController;
+use App\Http\Controllers\Frontend\FrProfileController;
+use App\Http\Controllers\Frontend\FrSearchController;
+use App\Http\Controllers\User\UserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+
+Route::get('/', function () {
+    if (Auth::check()) {
+        if (Auth::user()->role == '1') {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('user.dashboard');
+        }
+    } else {
+        return redirect()->route('login');
+    }
+});
+
+Route::fallback(function () {
+    return view('404');
+});
+
+Auth::routes();
+
+Route::get('404', [UserController::class, 'notFound'])->name('notFound');
+
+Route::post('password/change', [PasswordChangeController::class, 'ChangeStore'])->name('admin.password.change');
+
+Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'auth'], 'namespace' => 'Admin'], function () {
+
+    // ------------------------------ Admin Home Page----------------------------------
+    Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // ------------------------------ Admin Profile Page----------------------------------
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('profile/{username}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('profile/address/update', [ProfileController::class, 'addressUpdate'])->name('address.update');
+    Route::post('profile/name/change', [ProfileController::class, 'nameChange'])->name('admin.name.change');
+
+
+    Route::get('search-districts', [ProfileController::class, 'searchDistricts']);
+    Route::get('search-upazilas', [ProfileController::class, 'searchUpazilas']);
+    Route::get('search-unions', [ProfileController::class, 'searchUnions']);
+
+    // ------------------------------ Admin Address Page----------------------------------
+    Route::get('address', [AddressController::class, 'index'])->name('address');
+
+    // ------------------------------ Admin User List Page----------------------------------
+    Route::get('all/user', [UserListController::class, 'index'])->name('user.list');
+    Route::get('all/userInactive', [UserListController::class, 'userInactive'])->name('user.inactive');
+    Route::get('all/userActive', [UserListController::class, 'userActive'])->name('user.active');
+    Route::get('active/inactive/{id}', [UserListController::class, 'inActiveApprove'])->name('inactive.approve');
+    Route::get('active/active/{id}', [UserListController::class, 'ActiveApprove'])->name('active.approve');
+
+    Route::get('user-search-districts', [UserListController::class, 'searchDistricts']);
+    Route::get('user-search-upazilas', [UserListController::class, 'searchUpazilas']);
+    Route::get('user-search-unions', [UserListController::class, 'searchUnions']);
+
+    // ------------------------------ Admin Setting Page----------------------------------
+    Route::get('setting', [SettingController::class, 'index'])->name('setting');
+
+    // ------------------------------ All User Blood Donate History Page----------------------------------
+    Route::get('donate/history', [DonateHistoryController::class, 'index'])->name('donate.history');
+
+    // ------------------------------ Admin Role Page----------------------------------
+    Route::get('role', [RoleController::class, 'index'])->name('role');
+});
+
+
+Route::group(['middleware' => ['user', 'auth'], 'namespace' => 'User'], function () {
+    Route::get('dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('profile/{username}', [UserController::class, 'show'])->name('user.profile.show');
+    Route::get('profile/edit/{username}', [UserController::class, 'edit']);
+
+    // ------------------------------ Frontend Profile Page----------------------------------
+    Route::get('profile', [FrProfileController::class, 'index'])->name('user.profile');
+    Route::get('profile/{username}/edit', [FrProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::post('profile/name/change', [FrProfileController::class, 'nameChange'])->name('user.name.change');
+    Route::post('profile/address/update', [FrProfileController::class, 'addressUpdate'])->name('user.address.update');
+    Route::post('profile/update', [FrProfileController::class, 'update'])->name('user.profile.update');
+
+    // ------------------------------ Frontend Search Page----------------------------------
+    Route::get('search', [FrSearchController::class, 'index'])->name('user.search');
+
+    // ------------------------------ Frontend Search Page----------------------------------
+    Route::get('fake-user', [FrFakeUserController::class, 'index'])->name('user.fake');
+    Route::get('fake-user/details/{id}', [FrFakeUserController::class, 'show'])->name('user.fake.details');
+    Route::get('fake-user/create', [FrFakeUserController::class, 'create'])->name('user.fake.create');
+    Route::post('fake-user/store', [FrFakeUserController::class, 'store'])->name('user.fake.store');
+
+    Route::get('/search-districts', [FrSearchController::class, 'searchDistricts']);
+    Route::get('/search-upazilas', [FrSearchController::class, 'searchUpazilas']);
+    Route::get('/search-unions', [FrSearchController::class, 'searchUnions']);
+
+    // ------------------------------ Frontend Search Page----------------------------------
+    Route::get('history', [FrHistoryController::class, 'index'])->name('user.history');
+    Route::get('history.store', [FrHistoryController::class, 'Store'])->name('user.history.store');
+
+    // ------------------------------ Frontend Search Page----------------------------------
+    Route::middleware(['auth', 'check.next.donate'])->group(function () {
+        Route::get('next-donate', [FrDonateInfoController::class, 'nextDonate'])->name('next.donate');
+        Route::post('next-donate/history/store', [FrDonateInfoController::class, 'store'])->name('donate-history.store');
+    });
+});

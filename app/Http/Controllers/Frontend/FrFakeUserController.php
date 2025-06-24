@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\FakeUserStoreRequest;
+use App\Models\FakeUser;
+use App\Models\User;
+use App\Services\FakeUserService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class FrFakeUserController extends Controller
+{
+    public function index(Request $request, FakeUserService $userService)
+    {
+        $users = $userService->getFilteredFakeUsers($request);
+        return view('frontend.fake.index', compact('users'));
+    }
+
+    public function show($id)
+    {
+        $fakeUser = FakeUser::findOrFail($id);
+        $realUser = $fakeUser->user;
+        $allFakeUsers = $realUser->fakeUsers;
+
+        return view('frontend.fake.show', compact('fakeUser', 'allFakeUsers', 'realUser'));
+    }
+
+
+    public function create()
+    {
+        return view('frontend.fake.add');
+    }
+
+    public function store(FakeUserStoreRequest $request)
+    {
+        $data = $request->validated();
+        $data['user_id'] = Auth::id();
+
+        FakeUser::create($data);
+
+        $notification = array(
+            'message' => 'Fake User Add successfully!',
+            'alert' => 'success'
+        );
+        return redirect()->route('user.fake')->with($notification);
+    }
+}
