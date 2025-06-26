@@ -117,3 +117,5 @@ Route::group(['middleware' => ['user', 'auth'], 'namespace' => 'User'], function
         Route::post('next-donate/history/store', [FrDonateInfoController::class, 'store'])->name('donate-history.store');
     });
 });
+
+//----------------------finish route
