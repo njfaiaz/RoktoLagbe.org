@@ -23,6 +23,7 @@ class UserCreateSeeder extends Seeder
 
         $users = [
             "user",
+
         ];
 
         foreach ($users as $user) {
