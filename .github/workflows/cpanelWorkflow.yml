@@ -31,10 +31,12 @@ jobs:
 
       # 4. Install frontend dependencies and build assets
       - name: Install and Build Frontend
-        if: exists('package.json')
-        run: |
-          npm ci
-          npm run build || npm run prod
+    run: |
+      if [ -f package.json ]; then
+        npm ci
+        npm run build || npm run prod
+      fi
+
 
       # 5. Copy default .env if not exists
       - name: Ensure .env file exists
