@@ -41,7 +41,6 @@ Route::get('/run-migrate', function () {
     return '✅ Migration done';
 });
 
-
 Route::fallback(function () {
     return view('404');
 });
