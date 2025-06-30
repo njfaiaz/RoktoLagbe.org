@@ -1,69 +1,33 @@
-name: Deploy Laravel App to cPanel
-
+name: Deploy to cPanel
 on:
   push:
     branches:
       - production
-
 jobs:
-  deploy:
-    name: Upload to cPanel via FTP
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout the repository
-      - name: Checkout code
+      - name: Get the latest code
         uses: actions/checkout@v4
-
-      # 2. Setup PHP environment
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-          extensions: mbstring, bcmath, xml, curl, zip, mysql
-          tools: composer
-
-      # 3. Setup Node.js (for Laravel Mix or Vite)
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-
-      # 4. Install frontend dependencies and build assets
-      - name: Install and Build Frontend
-        if: exists('package.json')
-        run: |
-          npm ci
-          npm run build || npm run prod
-
-      # 5. Copy default .env if not exists
-      - name: Ensure .env file exists
+      - uses: actions/setup-node@master
+      - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-      # 6. Install PHP dependencies
-      - name: Install Composer Dependencies
-        run: composer install --no-dev --prefer-dist --optimize-autoloader --ignore-platform-reqs
-
-      # 7. Generate Laravel APP_KEY
-      - name: Generate Application Key
+      - name: Install Dependencies
+        run: composer update --ignore-platform-reqs
+      - name: Generate key
         run: php artisan key:generate
-
-      # 8. Create storage symlink
-      - name: Create Storage Symlink
+      - name: Generate storage link
         run: php artisan storage:link
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
 
-      # 9. Fix Laravel permissions
-      - name: Set Correct Permissions
-        run: chmod -R 775 storage bootstrap/cache
-
-      # 10. Deploy using FTP
-      - name: Deploy to cPanel via FTP
+      #Deploy to cPanel
+      - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /
           port: 21
-          server-dir: /public_html/ # Update as needed
-          local-dir: ./ # Update if you only want to deploy /dist etc.
-          dangerous-clean-slate: false
