@@ -29,13 +29,6 @@ jobs:
         with:
           node-version: "18"
 
-      # 4. Install frontend dependencies and build assets
-      - name: Install and Build Frontend
-        run: |
-          if [ -f package.json ]; then
-            npm ci
-            npm run build || npm run prod
-
       # 5. Copy default .env if not exists
       - name: Ensure .env file exists
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
