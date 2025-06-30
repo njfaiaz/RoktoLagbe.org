@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\FrSearchController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 
 Route::get('/', function () {
@@ -29,6 +30,17 @@ Route::get('/', function () {
         return redirect()->route('login');
     }
 });
+
+Route::get('/run-migrate', function () {
+    if (request('token') !== env('MIGRATE_SECRET')) {
+        abort(403);
+    }
+
+    Artisan::call('migrate --force');
+
+    return '✅ Migration done';
+});
+
 
 Route::fallback(function () {
     return view('404');
