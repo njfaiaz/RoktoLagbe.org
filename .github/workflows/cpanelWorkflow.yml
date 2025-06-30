@@ -1,4 +1,4 @@
-name: Deploy App to cPanel
+name: Deploy Laravel App to cPanel
 
 on:
   push:
@@ -28,6 +28,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+
+      # 4. Install frontend dependencies and build assets
+      - name: Install and Build Frontend
+        if: exists('package.json')
+        run: |
+          npm ci
+          npm run build || npm run prod
 
       # 5. Copy default .env if not exists
       - name: Ensure .env file exists
@@ -60,7 +67,3 @@ jobs:
           server-dir: /public_html/ # Update as needed
           local-dir: ./ # Update if you only want to deploy /dist etc.
           dangerous-clean-slate: false
-
-        # # 11. Run Laravel migration
-        # - name: Run Laravel migration
-        #   run: curl http://roktolagbe.org/run-migrate?token=my_secure_token_migrate
