@@ -44,8 +44,6 @@ Route::get('/run-migration-seed', function () {
     }
 });
 
-use Illuminate\Support\Facades\Artisan;
-
 Route::get('/clear-config', function () {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
