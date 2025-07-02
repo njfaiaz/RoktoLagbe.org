@@ -100,13 +100,11 @@
                 </div>
             </div>
 
-
-            <div class=" d-flex justify-content-start align-items-start py-3">
-                <div class="body">
-                    <ul class="pagination pagination-primary m-b-0">
-                        {{ $users->links('pagination::bootstrap-4') }}
-                    </ul>
-                </div>
+            <!-- Pagination -->
+            <div class="my-3">
+                <ul class="pagination pagination-primary m-b-0 justify-content-start">
+                    {{ $users->links('pagination::bootstrap-4') }}
+                </ul>
             </div>
         </main>
     </div>

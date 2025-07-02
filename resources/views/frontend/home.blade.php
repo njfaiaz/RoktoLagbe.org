@@ -85,12 +85,10 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="card mt-5">
-                    <div class="">
-                        <ul class="pagination pagination-primary m-b-0">
-                            {{ $users->links('pagination::bootstrap-4') }}
-                        </ul>
-                    </div>
+                <div class="my-3">
+                    <ul class="pagination pagination-primary m-b-0 justify-content-start">
+                        {{ $users->links('pagination::bootstrap-4') }}
+                    </ul>
                 </div>
 
             </div>

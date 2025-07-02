@@ -28,9 +28,8 @@
         @yield('frontend_content')
 
 
-        <div class="footer"> </div>
+        @include('frontend.layouts.footer')
     </section>
-
 
     <!--=============== MAIN JS ===============-->
     <script src="{{ asset('assets/frontend/js/fontawesome.js') }}"></script>
