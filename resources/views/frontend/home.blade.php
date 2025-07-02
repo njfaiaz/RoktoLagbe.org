@@ -23,10 +23,11 @@
                                 </div>
 
                                 @if ($user->profiles && $user->profiles->image)
-                                    <img src="{{ asset($user->profiles->image) }}" width="60" height="60" />
+                                    <img src="{{ url($user->profiles->image) }}" width="60" height="60" />
                                 @else
-                                    <img src="{{ asset('images/profile_av.jpg') }}">
+                                    <img src="{{ asset('images/profile_av.jpg') }}" width="60" height="60">
                                 @endif
+
 
                                 <p>{{ $user->addresses->district->district_name ?? 'N/A' }},
                                     {{ $user->addresses->upazila->upazila_name ?? 'N/A' }},
