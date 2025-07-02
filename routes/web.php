@@ -31,6 +31,29 @@ Route::get('/', function () {
 });
 
 
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/run-migration-seed', function () {
+    try {
+        Artisan::call('migrate --seed', [
+            '--force' => true, // Force করে প্রোডাকশনেও চালাবে
+        ]);
+        return '✅ Migration & Seed Completed Successfully!';
+    } catch (\Exception $e) {
+        return '❌ Error: ' . $e->getMessage();
+    }
+});
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/clear-config', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    return '✅ Config & Cache Cleared!';
+});
+
+
+
 Route::fallback(function () {
     return view('404');
 });
