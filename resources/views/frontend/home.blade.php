@@ -29,7 +29,8 @@
                                             : 'public/images/profile_av.jpg';
                                 @endphp
 
-                                <img src="{{ url($profileImage) }}" width="60" height="60" />
+                                <img src="{{ url($profileImage) }}" width="60" height="60"
+                                    alt="Profile of {{ $user->name }}" />
 
 
 
@@ -75,7 +76,8 @@
                                 @endphp
 
                                 @if ($endDate)
-                                    <div class="timer" data-endtime="{{ $endDate }}" data-userid="{{ $user->id }}"
+                                    <div class="timer" data-endtime="{{ $endDate }}"
+                                        data-userid="{{ $user->id }}"
                                         data-is-logged-in-user="{{ $isLoggedInUser ? 'yes' : 'no' }}">
                                     </div>
                                 @endif
