@@ -60,7 +60,8 @@
             <img src="{{ url($profileImage) }}" width="60" height="60" alt="Profile of {{ $user->name }}" />
 
             <div class="nav-user-icon online" onclick="settingsMenuToggle()">
-                <img src="{{ $profileImage }}" width="60" height="60" alt="Profile of {{ $user->name }}">
+                <img src="{{ url($profileImage) }}" width="60" height="60"
+                    alt="Profile of {{ $user->name }}">
             </div>
 
             <!--------------------- setting-menu ---------------------------------------->
