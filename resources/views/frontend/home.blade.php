@@ -22,14 +22,11 @@
                                     <h4>{{ $user->profiles->bloods->blood_name ?? 'N/A' }}</h4>
                                 </div>
 
-                                @php
-                                    $imagePath =
-                                        $user->profiles && $user->profiles->image
-                                            ? preg_replace('/^public\//', '', $user->profiles->image)
-                                            : 'images/profile_av.jpg';
-                                @endphp
-
-                                <img src="{{ asset($imagePath) }}" width="60" height="60" />
+                                @if ($user->profiles && $user->profiles->image)
+                                    <img src="{{ url($user->profiles->image) }}" width="60" height="60" />
+                                @else
+                                    <img src="{{ asset('images/profile_av.jpg') }}" width="60" height="60">
+                                @endif
 
 
                                 <p>{{ $user->addresses->district->district_name ?? 'N/A' }},
@@ -74,7 +71,8 @@
                                 @endphp
 
                                 @if ($endDate)
-                                    <div class="timer" data-endtime="{{ $endDate }}" data-userid="{{ $user->id }}"
+                                    <div class="timer" data-endtime="{{ $endDate }}"
+                                        data-userid="{{ $user->id }}"
                                         data-is-logged-in-user="{{ $isLoggedInUser ? 'yes' : 'no' }}">
                                     </div>
                                 @endif
