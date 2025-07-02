@@ -22,11 +22,15 @@
                                     <h4>{{ $user->profiles->bloods->blood_name ?? 'N/A' }}</h4>
                                 </div>
 
-                                @if ($user->profiles && $user->profiles->image)
-                                    <img src="{{ url($user->profiles->image) }}" width="60" height="60" />
-                                @else
-                                    <img src="{{ asset('images/profile_av.jpg') }}" width="60" height="60">
-                                @endif
+                                @php
+                                    $profileImage =
+                                        $user->profiles && $user->profiles->image
+                                            ? 'public/' . $user->profiles->image
+                                            : 'public/images/profile_av.jpg';
+                                @endphp
+
+                                <img src="{{ url($profileImage) }}" width="60" height="60" />
+
 
 
                                 <p>{{ $user->addresses->district->district_name ?? 'N/A' }},
@@ -71,8 +75,7 @@
                                 @endphp
 
                                 @if ($endDate)
-                                    <div class="timer" data-endtime="{{ $endDate }}"
-                                        data-userid="{{ $user->id }}"
+                                    <div class="timer" data-endtime="{{ $endDate }}" data-userid="{{ $user->id }}"
                                         data-is-logged-in-user="{{ $isLoggedInUser ? 'yes' : 'no' }}">
                                     </div>
                                 @endif
