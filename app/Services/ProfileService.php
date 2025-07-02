@@ -22,7 +22,7 @@ class ProfileService
             $profile->update($data);
 
             if ($image) {
-                $result = $this->resizeAndSaveImage($image, 292, 292, 'public/images/profile');
+                $result = $this->resizeAndSaveImage($image, 292, 292, 'images/profile');
                 $profile->image = $result['path'];
                 $profile->save();
             }
@@ -33,7 +33,7 @@ class ProfileService
             $profile = Profile::create($data);
 
             if ($image) {
-                $result = $this->resizeAndSaveImage($image, 292, 292, 'public/images/profile');
+                $result = $this->resizeAndSaveImage($image, 292, 292, 'images/profile');
                 $profile->image = $result['path'];
                 $profile->save();
             }
