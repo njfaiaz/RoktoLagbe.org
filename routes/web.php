@@ -17,7 +17,6 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', function () {
     if (Auth::check()) {
         if (Auth::user()->role == '1') {
@@ -35,10 +34,12 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/run-migration-seed', function () {
     try {
-        Artisan::call('migrate --seed', [
-            '--force' => true, // Force করে প্রোডাকশনেও চালাবে
+        Artisan::call('migrate', [
+            '--force' => true,
+            '--seed' => true,
         ]);
-        return '✅ Migration & Seed Completed Successfully!';
+
+        return '✅ Migration & Seed Successful!';
     } catch (\Exception $e) {
         return '❌ Error: ' . $e->getMessage();
     }
