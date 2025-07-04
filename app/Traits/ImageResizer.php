@@ -37,7 +37,10 @@ trait ImageResizer
 
         imagecopyresampled($resized, $source, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
 
-        $path = public_path($folder);
+        // ✅ Save to public_html instead of default public
+        $basePublicPath = realpath(base_path('../public_html')); // live server's public_html folder
+        $path = $basePublicPath . '/' . $folder;
+
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
@@ -63,7 +66,7 @@ trait ImageResizer
         return [
             'success' => true,
             'filename' => $filename,
-            'path' => $folder . '/' . $filename,
+            'path' => $folder . '/' . $filename, // This is relative path to be used with asset()
         ];
     }
 }
