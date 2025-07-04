@@ -82,15 +82,12 @@
                                     <h4>{{ $user->profiles->bloods->blood_name ?? 'N/A' }}</h4>
                                 </div>
 
-                                @php
-                                    $profileImage =
-                                        $user->profiles && $user->profiles->image
-                                            ? 'public/' . $user->profiles->image
-                                            : 'public/images/profile_av.jpg';
-                                @endphp
-
-                                <img src="{{ url($profileImage) }}" width="60" height="60"
-                                    alt="Profile of {{ $user->name }}" />
+                                @if ($user->profiles && $user->profiles->image)
+                                    <img src="{{ asset($user->profiles->image) }}" width="60" height="60"
+                                        alt="Profile of {{ $user->name }}" />
+                                @else
+                                    <img src="{{ asset('images/profile_av.jpg') }}">
+                                @endif
 
                                 <p>{{ $user->addresses->district->district_name ?? 'N/A' }},
                                     {{ $user->addresses->upazila->upazila_name ?? 'N/A' }},

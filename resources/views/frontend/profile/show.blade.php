@@ -11,15 +11,12 @@
                     <img class="card-img-top" src="{{ asset('assets/frontend/img/cover.jpg') }}" alt="Card image cap">
                     <div class="card-body little-profile text-center">
                         <div class="pro-img">
-                            @php
-                                $profileImage =
-                                    $user->profiles && $user->profiles->image
-                                        ? 'public/' . $user->profiles->image
-                                        : 'public/images/profile_av.jpg';
-                            @endphp
-
-                            <img src="{{ url($profileImage) }}" width="60" height="60"
-                                alt="Profile of {{ $user->name }}" />
+                            @if ($user->profiles && $user->profiles->image)
+                                <img src="{{ asset($user->profiles->image) }}" width="60" height="60"
+                                    alt="Profile of {{ $user->name }}" />
+                            @else
+                                <img src="{{ asset('images/profile_av.jpg') }}">
+                            @endif
                         </div>
                         <h3 class="m-b-0">{{ $user->name }}</h3>
                         <p>{{ $user->profiles->bloods->blood_name ?? 'N/A' }} <Strong>Blood Donar</Strong></p>
