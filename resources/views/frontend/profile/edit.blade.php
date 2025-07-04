@@ -5,10 +5,61 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/bootstrap-select/css/bootstrap-select.css') }}">
     <style>
         .dropify-wrapper {
-            height: 180px;
-            width: 180px;
+            height: 114px !important;
+            width: 114px !important;
             margin: 0 auto;
-            border-radius: 5%;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 !important;
+        }
+
+        .dropify-wrapper .dropify-preview {
+            width: 100%;
+            height: 100% !important;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .dropify-wrapper .dropify-preview .dropify-render img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            margin: 0 !important;
+            padding: 0 !important;
+            vertical-align: middle;
+        }
+
+        .dropify-wrapper .dropify-preview .dropify-render {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .dropify-wrapper .dropify-clear {
+            display: none;
+            position: absolute;
+            opacity: 0;
+            z-index: 7;
+            top: 50px;
+            right: 20px;
+            background: 0 0;
+            border: 2px solid #FFF;
+            text-transform: uppercase;
+            font-size: 10px;
+            padding: 1px 10px;
+            font-weight: 700;
+            color: #FFF;
+            -webkit-transition: all .15s linear;
+            transition: all .15s linear;
         }
 
         dl,
@@ -173,8 +224,9 @@
 
                                 <input type="file" id="imageUpload" name="image" class="dropify"
                                     data-max-file-size="2M"
-                                    data-default-file="{{ optional($profile)->image ? asset($profile->image) : '' }}"
+                                    data-default-file="{{ optional($profile)->image ? asset($profile->image) : asset('images/profile_av.jpg') }}"
                                     data-msg-placeholder="Upload your Profile" />
+
                             </div>
                         </div>
 
