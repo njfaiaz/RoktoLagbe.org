@@ -47,8 +47,8 @@
                 </div>
             </li>
         @empty
-            <li>
-                <p>No history history found.</p>
+            <li class="no-donation-message">
+                <p>No donation history found.</p>
             </li>
         @endforelse
 

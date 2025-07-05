@@ -69,6 +69,42 @@
             margin-bottom: 1rem;
             margin-left: -38px;
         }
+
+        @media screen and (max-width: 767px) {
+            .dropify-wrapper {
+                height: 90px !important;
+                width: 100px !important;
+            }
+
+            .dropify-wrapper .dropify-preview {
+                height: 90px !important;
+                width: 90px !important;
+            }
+
+            .dropify-wrapper .dropify-preview .dropify-render img {
+                height: 100%;
+                width: 100%;
+            }
+
+            .dropify-wrapper .dropify-clear {
+                top: 40px;
+                right: 15px;
+            }
+
+            .dropify-wrapper.touch-fallback {
+                height: 100px !important;
+            }
+
+            .dropify-wrapper .dropify-message {
+                position: sticky;
+            }
+
+            dl,
+            ol,
+            ul {
+                margin-left: -28px;
+            }
+        }
     </style>
 @endpush
 @section('title', 'Profile Edit')

@@ -167,7 +167,7 @@
                         </div>
                     </li>
                 @empty
-                    <li>
+                    <li class="no-donation-message">
                         <p>No donation history found.</p>
                     </li>
                 @endforelse
