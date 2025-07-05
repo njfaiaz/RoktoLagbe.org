@@ -1,6 +1,18 @@
 @extends('app')
 @section('title', 'Profile')
-
+@push('style')
+    <style>
+        .no-donation-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            text-align: center;
+            font-weight: 800;
+            color: #050505;
+        }
+    </style>
+@endpush
 
 
 @section('frontend_content')

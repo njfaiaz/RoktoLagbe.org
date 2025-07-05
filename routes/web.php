@@ -32,19 +32,18 @@ Route::get('/', function () {
 
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('/run-migration-seed', function () {
+Route::get('/run-fresh-migration-seed', function () {
     try {
-        Artisan::call('migrate', [
-            '--force' => true,
+        Artisan::call('migrate:fresh', [
             '--seed' => true,
+            '--force' => true,
         ]);
 
-        return '✅ Migration & Seed Successful!';
+        return '✅ Fresh Migration & Seed Successful!';
     } catch (\Exception $e) {
         return '❌ Error: ' . $e->getMessage();
     }
 });
-
 Route::get('/clear-config', function () {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');

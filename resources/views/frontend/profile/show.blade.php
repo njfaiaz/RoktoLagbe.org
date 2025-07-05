@@ -1,7 +1,19 @@
 @extends('app')
 @section('title', 'Profile Show')
 
-
+@push('style')
+    <style>
+        .no-donation-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            text-align: center;
+            font-weight: 800;
+            color: #050505;
+        }
+    </style>
+@endpush
 
 @section('frontend_content')
     <div class="padding">
@@ -165,7 +177,7 @@
                         </div>
                     </li>
                 @empty
-                    <li>
+                    <li class="no-donation-message">
                         <p>No donation history found.</p>
                     </li>
                 @endforelse
