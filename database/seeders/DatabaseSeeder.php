@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
             UnionSeeder::class,
             AddressSeeder::class,
             BloodSeeder::class,
-            // ProfileSeeder::class,
-            // DonateHistorySeeder::class,
-            // FakeUserSeeder::class,
+            ProfileSeeder::class,
+            DonateHistorySeeder::class,
+            FakeUserSeeder::class,
         ]);
     }
 }
