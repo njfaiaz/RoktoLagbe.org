@@ -30,27 +30,6 @@ Route::get('/', function () {
 });
 
 
-use Illuminate\Support\Facades\Artisan;
-
-Route::get('/run-fresh-migration-seed', function () {
-    try {
-        Artisan::call('migrate:fresh', [
-            '--seed' => true,
-            '--force' => true,
-        ]);
-
-        return '✅ Fresh Migration & Seed Successful!';
-    } catch (\Exception $e) {
-        return '❌ Error: ' . $e->getMessage();
-    }
-});
-Route::get('/clear-config', function () {
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    return '✅ Config & Cache Cleared!';
-});
-
-
 
 Route::fallback(function () {
     return view('404');
