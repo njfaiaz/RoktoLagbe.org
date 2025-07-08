@@ -1,21 +1,31 @@
-name: Deploy to cPanel
+name: Deploy Laravel
+
 on:
   push:
     branches:
       - production
+
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      #Deploy to cPanel
-      - name: FTP-Deploy-Action
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy Full Laravel Project to /RoktoLagbe
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
+          server-dir: /RoktoLagbe/
+          local-dir: ./
+
+      - name: Deploy Public Folder to /public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/
+          local-dir: ./public/
