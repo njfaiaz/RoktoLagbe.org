@@ -83,6 +83,20 @@
                             As a member?
                             <a data-toggle="tab" href="{{ route('login') }}">Log In</a>
                         </p>
+                        <footer class="text-center text-muted border-top">
+                            <p class="mt-3">
+                                Hosted by
+                                <a href="https://univahost.com" target="_blank"
+                                    class="text-decoration-none fw-semibold text-dark fw-bold">
+                                    Univahost
+                                </a>
+                                &
+                                <a href="https://namepart.com" target="_blank"
+                                    class="text-decoration-none fw-semibold text-dark fw-bold">
+                                    Namepart
+                                </a>
+                            </p>
+                        </footer>
                     </div>
                 </div>
             </div>
