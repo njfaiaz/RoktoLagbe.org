@@ -17,6 +17,8 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Artisan;
+
 Route::get('/', function () {
     if (Auth::check()) {
         if (Auth::user()->role == '1') {
@@ -29,6 +31,11 @@ Route::get('/', function () {
     }
 });
 
+Route::get('/clear-config', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    return '✅ Config & Cache Cleared!';
+});
 
 
 Route::fallback(function () {
