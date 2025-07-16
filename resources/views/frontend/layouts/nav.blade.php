@@ -41,7 +41,8 @@
                     </li>
 
                     <li class="nav__item">
-                        <a href="support.html" class="nav__link {{ request()->is('support') ? 'active-link' : '' }}">
+                        <a href="{{ route('user.support') }}"
+                            class="nav__link {{ request()->is('user.support') ? 'active-link' : '' }}">
                             <i class='bx bx-support nav__icon'></i>
                             <span class="nav__name">Support</span>
                         </a>

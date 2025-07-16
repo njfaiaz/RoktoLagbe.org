@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\FrFakeUserController;
 use App\Http\Controllers\Frontend\FrHistoryController;
 use App\Http\Controllers\Frontend\FrProfileController;
 use App\Http\Controllers\Frontend\FrSearchController;
+use App\Http\Controllers\Frontend\FrSupportController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,12 +30,6 @@ Route::get('/', function () {
     } else {
         return redirect()->route('login');
     }
-});
-
-Route::get('/clear-config', function () {
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    return '✅ Config & Cache Cleared!';
 });
 
 
@@ -118,6 +113,9 @@ Route::group(['middleware' => ['user', 'auth'], 'namespace' => 'User'], function
     // ------------------------------ Frontend Search Page----------------------------------
     Route::get('history', [FrHistoryController::class, 'index'])->name('user.history');
     Route::get('history.store', [FrHistoryController::class, 'Store'])->name('user.history.store');
+
+    // ------------------------------ Frontend Support Page----------------------------------
+    Route::get('support', [FrSupportController::class, 'index'])->name('user.support');
 
     // ------------------------------ Frontend Search Page----------------------------------
     Route::middleware(['auth', 'check.next.donate'])->group(function () {
