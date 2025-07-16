@@ -1,21 +1,36 @@
 name: Deploy to cPanel on Production Branch
+
 on:
   push:
     branches:
       - production
+
 jobs:
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: FTP Deploy from /roktolagbe/ to /public_html
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Checkout Code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      #Deploy to cPanel
-      - name: FTP-Deploy-Action
+
+      - name: 📁 Copy assets to temp folder
+        run: |
+          mkdir deploy_assets
+          cp -r roktolagbe/public/assets/* deploy_assets/
+
+      - name: 🚀 FTP Deploy to public_html/assets/
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
+          server-dir: /public_html/assets/
+          local-dir: deploy_assets/
+          protocol: ftp
+
+      - name: ✅ Done
+        run: echo "Assets deployed!"
