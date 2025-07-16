@@ -9,6 +9,11 @@ git clone https://github.com/njfaiaz/RoktoLagbe.git
 ```
 
 ```bash
+/usr/local/bin/ea-php81 /home/roktolag/public_html/artisan backup:run --only-db >> /home/roktolag/backup_log.txt 2>&1
+```
+
+
+```bash
 cd RoktoLagbe.com.bd
 ```
 
