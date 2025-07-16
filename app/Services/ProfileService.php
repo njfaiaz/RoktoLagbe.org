@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Profile;
-use Illuminate\Support\Facades\Storage;
 use App\Traits\ImageResizer;
 
 class ProfileService
@@ -15,8 +14,13 @@ class ProfileService
         $profile = Profile::where('user_id', $userId)->first();
 
         if ($profile) {
-            if ($profile->image && file_exists(public_path($profile->image))) {
-                unlink(public_path($profile->image));
+            if ($profile->image) {
+                $basePublicPath = realpath(base_path('../public_html'));
+                $imagePath = $basePublicPath . '/' . $profile->image;
+
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
             }
 
             $profile->update($data);
