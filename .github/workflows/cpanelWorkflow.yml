@@ -19,7 +19,7 @@ jobs:
       - name: 📁 Prepare Asset Files
         run: |
           mkdir -p deploy_assets
-          cp -r roktolagbe/public/assets/* deploy_assets/
+          cp -r public/assets/* deploy_assets/
 
       - name: 🚀 FTP Upload assets to public_html/assets/
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
