@@ -1,4 +1,4 @@
-@extends('layouts.loginApp')
+{{-- @extends('layouts.loginApp') --}}
 
 @section('title', 'Login')
 
