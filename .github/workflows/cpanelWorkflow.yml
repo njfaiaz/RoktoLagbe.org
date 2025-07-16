@@ -1,3 +1,4 @@
+# # Live project uploaded to cPanel without  Assets file all updated.
 # name: Deploy to cPanel on Production Branch
 # on:
 #   push:
@@ -19,6 +20,8 @@
 #           username: ${{ secrets.FTP_USERNAME }}
 #           password: ${{ secrets.FTP_PASSWORD }}
 #           port: 21
+
+# Live project uploaded to cPanel with Assets file all updated.
 
 name: Deploy Only Assets to cPanel
 
