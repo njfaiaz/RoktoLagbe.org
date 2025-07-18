@@ -15,6 +15,24 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function gustView()
+    {
+
+        // Guest user view
+        $users = User::with([
+            'profiles.bloods',
+            'addresses.district',
+            'addresses.upazila',
+            'addresses.union',
+            'donatehistories'
+        ])
+            ->latest()
+            ->paginate(12);
+        return view('home', compact('users'));
+    }
+
+
+
     public function index()
     {
         $loggedInUserId = auth()->id();

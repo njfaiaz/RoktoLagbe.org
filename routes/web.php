@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('/', function () {
+Route::get('/dashboard', function () {
     if (Auth::check()) {
         if (Auth::user()->role == '1') {
             return redirect()->route('admin.dashboard');
@@ -28,7 +28,7 @@ Route::get('/', function () {
             return redirect()->route('user.dashboard');
         }
     } else {
-        return redirect()->route('login');
+        return view('home');;
     }
 });
 
@@ -50,6 +50,7 @@ Route::get('/video', function () {
 
 Auth::routes();
 
+Route::get('/', [UserController::class, 'gustView'])->name('gust.view');
 Route::get('404', [UserController::class, 'notFound'])->name('notFound');
 
 Route::post('password/change', [PasswordChangeController::class, 'ChangeStore'])->name('admin.password.change');
