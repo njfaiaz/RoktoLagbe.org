@@ -106,19 +106,23 @@
 
     @push('footer_scripts')
         <script>
-            let password = document.getElementById('password');
-            let togglepassword = document.getElementById('toggle');
+    let password = document.getElementById('password');
+    let confirmPassword = document.getElementById('password-confirm');
+    let togglepassword = document.getElementById('toggle');
 
-            function showhide() {
-                if (password.type === 'password') {
-                    password.setAttribute('type', 'text');
-                    togglepassword.classList.add('hide')
-                } else {
-                    password.setAttribute('type', 'password');
-                    togglepassword.classList.remove('hide')
-                }
-            }
-        </script>
+    function showhide() {
+        if (password.type === 'password') {
+            password.type = 'text';
+            confirmPassword.type = 'text';
+            togglepassword.classList.add('hide');
+        } else {
+            password.type = 'password';
+            confirmPassword.type = 'password';
+            togglepassword.classList.remove('hide');
+        }
+    }
+</script>
+
     @endpush
 @endsection
 
