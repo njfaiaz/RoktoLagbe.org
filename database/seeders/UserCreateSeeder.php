@@ -21,19 +21,28 @@ class UserCreateSeeder extends Seeder
             'password' => Hash::make('Faiaz@#1234'),
         ]);
 
-        // $users = [
-        //     "user",
-        // ];
+        $users = [
+            "user", "faiaz", "sifat", "junayed", "tanvir", "ayesha", "rafiq", "sumaiya", "nayeem", "shahriar",
+            "mahdi", "labiba", "arif", "mim", "tuhin", "fahim", "nabila", "rakib", "shuvo", "jannat",
+            "anik", "meher", "sohana", "ibrahim", "rumana", "sajib", "tanha", "shirin", "foysal", "labonno",
+            "tania", "raihaan", "samiha", "farhan", "nafisa", "hasan", "amina", "shahad", "rayhan", "fariha",
+            "riyad", "mahi", "nishat", "imran", "sharmin", "tanima", "junaid", "mahfuz", "arman", "meherun",
+            "nashit", "rokeya", "tawsif", "sourav", "anika", "shimul", "farhana", "arafat", "rasheda", "mim",
+            "sami", "tuhin", "rakib", "mahdi", "fariha", "sifat", "riyad", "labonno", "sharmin", "mahi",
+            "jannat", "imran", "tanima", "fahim", "samiha", "arif", "nafisa", "shahad", "rayhan", "anik",
+            "meher", "shirin", "junayed", "faiaz", "tanvir", "ayesha", "rafiq", "sumaiya", "nayeem", "shahriar",
+            "mahdi", "labiba", "arif", "mim", "tuhin", "fahim", "nabila", "rakib", "shuvo", "jannat"
+        ];
 
-        // foreach ($users as $user) {
-        //     User::create([
-        //         'name' => strtolower($user),
-        //         'username' => User::generateUniqueUsername($user),
-        //         'email' => strtolower($user) . '@gmail.com',
-        //         'role' => UserRole::USER->value,
-        //         'password' => Hash::make('Abc@1234'),
-        //         'remember_token' => Str::random(10),
-        //     ]);
-        // }
+        foreach ($users as $user) {
+            User::create([
+                'name' => strtolower($user),
+                'username' => User::generateUniqueUsername($user),
+                'email' => strtolower($user) . '@gmail.com',
+                'role' => UserRole::USER->value,
+                'password' => Hash::make('Abc@1234'),
+                'remember_token' => Str::random(10),
+            ]);
+        }
     }
 }

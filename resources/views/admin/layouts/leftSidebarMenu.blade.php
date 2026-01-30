@@ -21,6 +21,16 @@
                   <a href="{{ route('admin.dashboard') }}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a>
               </li>
 
+              <li class="{{ request()->routeIs('admin.*') ? 'active open' : '' }}">
+                  <a href="javascript:void(0);" class="menu-toggle"><i
+                          class="zmdi zmdi-hc-fw"></i><span>Admin Create</span></a>
+                  <ul class="ml-menu">
+                      <li><a class="{{ request()->routeIs('admin.all') ? 'active' : '' }}"
+                              href="{{ route('admin.all') }}"> All Admin </a></li>
+                      <li><a class="{{ request()->routeIs('admin.create') ? 'active' : '' }}"
+                              href="{{ route('admin.create') }}">  Admin Create </a></li>
+                  </ul>
+              </li>
               <li class="{{ request()->routeIs('address') ? 'active open' : '' }}">
                   <a href="javascript:void(0);" class="menu-toggle"><i
                           class="zmdi zmdi-hc-fw"></i><span>Address</span></a>
@@ -29,6 +39,8 @@
                               href="{{ route('address') }}">Address List</a></li>
                   </ul>
               </li>
+
+              
 
               <li class="{{ request()->routeIs('user.*') ? 'active open' : '' }}">
                   <a href="javascript:void(0);" class="menu-toggle"><i
@@ -51,10 +63,6 @@
                       <li><a class="{{ request()->routeIs('donate.history') ? 'active' : '' }}"
                               href="{{ route('donate.history') }}">All Donate History</a></li>
                   </ul>
-              </li>
-
-              <li class="{{ request()->routeIs('role') ? 'active open' : '' }}">
-                  <a href="{{ route('role') }}"><i class="zmdi zmdi-hc-fw"></i><span>Role</span></a>
               </li>
 
               <li class="{{ request()->routeIs('setting') ? 'active open' : '' }}">

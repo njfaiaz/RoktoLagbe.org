@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserListController;
+use App\Http\Controllers\Admin\AdminCreateController;
 use App\Http\Controllers\Frontend\FrDonateInfoController;
 use App\Http\Controllers\Frontend\FrFakeUserController;
 use App\Http\Controllers\Frontend\FrHistoryController;
@@ -72,6 +73,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'auth'], 'namespace
     Route::get('search-upazilas', [ProfileController::class, 'searchUpazilas']);
     Route::get('search-unions', [ProfileController::class, 'searchUnions']);
 
+     // ------------------------------ Admin Create Page----------------------------------
+    Route::get('all/admin', [AdminCreateController::class, 'index'])->name('admin.all');
+    Route::get('admin/create', [AdminCreateController::class, 'create'])->name('admin.create');
+                
     // ------------------------------ Admin Address Page----------------------------------
     Route::get('address', [AddressController::class, 'index'])->name('address');
 
@@ -92,8 +97,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'auth'], 'namespace
     // ------------------------------ All User Blood Donate History Page----------------------------------
     Route::get('donate/history', [DonateHistoryController::class, 'index'])->name('donate.history');
 
-    // ------------------------------ Admin Role Page----------------------------------
-    Route::get('role', [RoleController::class, 'index'])->name('role');
 });
 
 

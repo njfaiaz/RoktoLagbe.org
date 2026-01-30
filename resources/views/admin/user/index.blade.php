@@ -29,97 +29,102 @@
                 <div class="col-lg-12">
                     <div class="card">
 
-                        {{-- Search Option ------------------------------------------------------------------------------ --}}
-
-                        <form action="{{ route('user.list') }}" method="GET">
-                            <div class="filter-section">
-
-                                <select name="blood_name" id="blood_group" class="d-block">
-                                    <option disabled {{ request('blood_name') ? '' : 'selected' }}>Select Blood</option>
-                                    @foreach ($bloods as $blood)
-                                        <option value="{{ $blood->id }}"
-                                            {{ request()->query('blood_name') == $blood->id ? 'selected' : '' }}>
-                                            {{ $blood->blood_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div>
-
-                                    <input type="text" name="name" class="form-control" value="{{ request('name') }}"
-                                        placeholder="Search by name">
-                                </div>
-
-                                <div>
-                                    <input type="text" name="phone_number" class="form-control"
-                                        value="{{ request('phone_number') }}" placeholder="Phone Number">
-                                </div>
-
-                                <div>
-                                    <input type="text" name="district_name" class="form-control" id="district"
-                                        autocomplete="off" value="{{ old('district_name', $districtName ?? '') }}"
-                                        placeholder="District Name">
-
-                                    <input type="hidden" id="district_id" name="district_id" class="form-control"
-                                        value="{{ request()->query('district_id') ?? '' }}">
-
-                                    <div id="district-list-container">
-                                        <ul id="district-list" class="list-group phone_version mt-2"></ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <input type="text" name="upazila_name" class="form-control" id="upazila"
-                                        autocomplete="off"
-                                        value="{{ old('upazila_name', request()->query('upazila_name')) }}"
-                                        placeholder="Upazila Name">
-                                    <input type="hidden" id="upazila_id" name="upazila_id"
-                                        value="{{ old('upazila_id', request()->query('upazila_id')) }}">
-                                    <div id="upazila-list-container">
-                                        <ul id="upazila-list" class="list-group phone_version mt-2"></ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <input type="text" name="union_name" class="form-control" id="union"
-                                        autocomplete="off" value="{{ old('union_name', request()->query('union_name')) }}"
-                                        placeholder="Union Name">
-                                    <input type="hidden" id="union_id" name="union_id"
-                                        value="{{ old('union_id', request()->query('union_id')) }}">
-                                    <div id="union-list-container">
-                                        <ul id="union-list" class="list-group phone_version mt-2"></ul>
-                                    </div>
-                                </div>
-
-                                <select name="status" class="d-block">
-                                    <option value="">All Statuses</option>
-                                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active
-                                    </option>
-                                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>
-                                        Inactive</option>
-                                </select>
-
-                                <select name="eligibility" class="d-block">
-                                    <option value="all"
-                                        {{ request()->query('eligibility') == 'all' ? 'selected' : '' }}>All
-                                        Users</option>
-                                    <option value="eligible"
-                                        {{ request()->query('eligibility') == 'eligible' ? 'selected' : '' }}>
-                                        Users Eligible to Donate</option>
-                                    <option value="not_eligible"
-                                        {{ request()->query('eligibility') == 'not_eligible' ? 'selected' : '' }}>Users Not
-                                        Yet
-                                        Eligible</option>
-                                </select>
-
-                                <div>
-                                    <button type="submit" class="btn filter_search">Search</button>
-                                    <a class="btn filter_search" href="{{ url()->current() }}">Reset </a>
-                                </div>
-                            </div>
-                        </form>
-
-
+                        
+                        
                         <div class="table-responsive">
+
+                            {{-- Search Option ------------------------------------------------------------------------------ --}}
+                            
+                            <form action="{{ route('user.list') }}" method="GET">
+                                <div class="filter-section">
+
+                                    <select name="blood_name" id="blood_group" class="d-block">
+                                        <option disabled {{ request('blood_name') ? '' : 'selected' }}>Select Blood</option>
+                                        @foreach ($bloods as $blood)
+                                            <option value="{{ $blood->id }}"
+                                                {{ request()->query('blood_name') == $blood->id ? 'selected' : '' }}>
+                                                {{ $blood->blood_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div>
+
+                                        <input type="text" name="name" class="form-control" value="{{ request('name') }}"
+                                            placeholder="Search by name">
+                                    </div>
+
+                                    <div>
+                                        <input type="text" name="phone_number" class="form-control"
+                                            value="{{ request('phone_number') }}" placeholder="Phone Number">
+                                    </div>
+
+                                    <div>
+                                        <input type="text" name="district_name" class="form-control" id="district"
+                                            autocomplete="off" value="{{ old('district_name', $districtName ?? '') }}"
+                                            placeholder="District Name">
+
+                                        <input type="hidden" id="district_id" name="district_id" class="form-control"
+                                            value="{{ request()->query('district_id') ?? '' }}">
+
+                                        <div id="district-list-container">
+                                            <ul id="district-list" class="list-group phone_version mt-2"></ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <input type="text" name="upazila_name" class="form-control" id="upazila"
+                                            autocomplete="off"
+                                            value="{{ old('upazila_name', request()->query('upazila_name')) }}"
+                                            placeholder="Upazila Name">
+                                        <input type="hidden" id="upazila_id" name="upazila_id"
+                                            value="{{ old('upazila_id', request()->query('upazila_id')) }}">
+                                        <div id="upazila-list-container">
+                                            <ul id="upazila-list" class="list-group phone_version mt-2"></ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <input type="text" name="union_name" class="form-control" id="union"
+                                            autocomplete="off" value="{{ old('union_name', request()->query('union_name')) }}"
+                                            placeholder="Union Name">
+                                        <input type="hidden" id="union_id" name="union_id"
+                                            value="{{ old('union_id', request()->query('union_id')) }}">
+                                        <div id="union-list-container">
+                                            <ul id="union-list" class="list-group phone_version mt-2"></ul>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <select name="status" class="d-block">
+                                            <option value="">All Statuses</option>
+                                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active
+                                            </option>
+                                            <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>
+                                                Inactive</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <select name="eligibility" class="d-block">
+                                            <option value="all"
+                                                {{ request()->query('eligibility') == 'all' ? 'selected' : '' }}>All
+                                                Users</option>
+                                            <option value="eligible"
+                                                {{ request()->query('eligibility') == 'eligible' ? 'selected' : '' }}>
+                                                Users Eligible to Donate</option>
+                                            <option value="not_eligible"
+                                                {{ request()->query('eligibility') == 'not_eligible' ? 'selected' : '' }}>Users Not
+                                                Yet
+                                                Eligible</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <button type="submit" class="btn filter_search">Search</button>
+                                        <a class="btn filter_search" href="{{ url()->current() }}">Reset </a>
+                                    </div>
+                                </div>
+                            </form>
 
                             {{-- Table --------------------------------------------------------------------- --}}
                             <table
