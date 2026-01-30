@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class AdminCraeate extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
 
     protected $fillable = [
         'name',
         'phone_number',
-        'image'
     ];
 }

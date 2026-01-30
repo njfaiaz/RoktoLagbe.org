@@ -35,9 +35,7 @@
                                     <tr class="footable-header">
                                         <th class="footable-sortable" style="display: table-cell;">ID Name<span
                                                 class="fooicon fooicon-sort"></span></th>
-                                        <th class="footable-sortable footable-first-visible" style="display: table-cell;">
-                                            Image<span class="fooicon fooicon-sort"></span>
-                                        </th>
+                                        
                                         <th class="footable-sortable" style="display: table-cell;">Full Name<span
                                                 class="fooicon fooicon-sort"></span></th>
                                         <th data-breakpoints="sm xs" class="footable-sortable" style="display: table-cell;">
@@ -48,69 +46,35 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                {{-- <tbody>
+                                <tbody>
 
-                                    @forelse ($ActiveUser as $key => $user)
+                                    @forelse ($admins as $key => $admin)
                                         <tr>
                                             <td style="display: table-cell; vertical-align: middle; text-align: center;">
                                                 {{ $key + 1 }}</td>
-                                            <td class="footable-first-visible" style="display: table-cell;">
-                                                @if ($user->profiles && $user->profiles->image)
-                                                    <img src="{{ asset($user->profiles->image) }}" width="60"
-                                                        height="60" />
-                                                @else
-                                                    <span>No Image</span>
-                                                @endif
-
-                                            </td>
+                                            
 
 
                                             <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <h5>{{ $user->name }}</h5>
+                                                <h5>{{ $admin->name }}</h5>
                                             </td>
                                             <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span class="text-muted">{{ $user->username }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span class="text-muted">{{ $user->email }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                @if ($user->status == 1)
-                                                    <span class="badge badge-success">Active</span>
-                                                @else
-                                                    <span class="badge badge-danger">Inactive</span>
-                                                @endif
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span class="text-muted">{{ $user->profiles->phone_number ?? 'N/A' }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span
-                                                    class="col-green">{{ $user->profiles->bloods->blood_name ?? 'N/A' }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span class="col-green">{{ $user->profiles->gender ?? 'N/A' }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span
-                                                    class="text-muted">{{ $user->profiles->previous_donation_date ?? 'N/A' }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span
-                                                    class="text-muted">{{ $user->addresses->district->district_name ?? 'N/A' }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span
-                                                    class="text-muted">{{ $user->addresses->upazila->upazila_name ?? 'N/A' }}</span>
-                                            </td>
-                                            <td style="display: table-cell; vertical-align: middle; text-align: center;">
-                                                <span
-                                                    class="text-muted">{{ $user->addresses->union->union_name ?? 'N/A' }}</span>
+                                                <span class="text-muted">{{ $admin->phone_number ?? 'N/A' }}</span>
                                             </td>
                                             <td class="footable-last-visible" style="display: table-cell;">
-                                                <a href="{{ route('inactive.approve', $user->id) }}" id="block"
-                                                    class="btn btn-default waves-effect waves-float btn-sm waves-red"><i
-                                                        class="zmdi zmdi-delete"></i></a>
+                                                <a href="{{ route('admin.edit', $admin->id) }}"
+                                                    class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-edit"></i></a>
+                                               
+
+                                                        <form action="{{ route('admin.destroy', $admin->id) }}" method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-default waves-effect waves-float btn-sm waves-red"
+                                                                onclick="return confirm('Are you sure you want to delete this admin?')">
+                                                                <i class="zmdi zmdi-delete"></i>
+                                                            </button>
+                                                        </form>
                                             </td>
                                         </tr>
                                     @empty
@@ -119,18 +83,18 @@
                                         </tr>
                                     @endforelse
 
-                                </tbody> --}}
+                                </tbody>
                                 <tfoot></tfoot>
                             </table>
                         </div>
                     </div>
-                    {{-- <div class=" d-flex justify-content-start align-items-start py-3">
+                    <div class=" d-flex justify-content-start align-items-start py-3">
                         <div class="body">
                             <ul class="pagination pagination-primary m-b-0">
-                                {{ $ActiveUser->links('pagination::bootstrap-4') }}
+                                {{ $admins->links('pagination::bootstrap-4') }}
                             </ul>
                         </div>
-                    </div> --}}
+                    </div>
 
                 </div>
             </div>

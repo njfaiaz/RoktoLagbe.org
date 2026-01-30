@@ -76,7 +76,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'auth'], 'namespace
      // ------------------------------ Admin Create Page----------------------------------
     Route::get('all/admin', [AdminCreateController::class, 'index'])->name('admin.all');
     Route::get('admin/create', [AdminCreateController::class, 'create'])->name('admin.create');
-                
+    Route::post('admin/store', [AdminCreateController::class, 'store'])->name('admin.store');
+    Route::get('admin/{admin}/edit', [AdminCreateController::class, 'edit'])->name('admin.edit');
+    Route::put('admin/{admin}', [AdminCreateController::class, 'update'])->name('admin.update');
+    Route::delete('admin/{admin}', [AdminCreateController::class, 'destroy'])->name('admin.destroy');
     // ------------------------------ Admin Address Page----------------------------------
     Route::get('address', [AddressController::class, 'index'])->name('address');
 
