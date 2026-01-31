@@ -35,12 +35,12 @@
                                     <tr class="footable-header">
                                         <th class="footable-sortable" style="display: table-cell;">ID Name<span
                                                 class="fooicon fooicon-sort"></span></th>
-                                        
+
                                         <th class="footable-sortable" style="display: table-cell;">Full Name<span
                                                 class="fooicon fooicon-sort"></span></th>
                                         <th data-breakpoints="sm xs" class="footable-sortable" style="display: table-cell;">
                                             Phone Number<span class="fooicon fooicon-sort"></span></th>
-                                        
+
                                         <th data-breakpoints="sm xs md" class="footable-sortable footable-last-visible"
                                             style="display: table-cell;">Action<span class="fooicon fooicon-sort"></span>
                                         </th>
@@ -52,7 +52,7 @@
                                         <tr>
                                             <td style="display: table-cell; vertical-align: middle; text-align: center;">
                                                 {{ $key + 1 }}</td>
-                                            
+
 
 
                                             <td style="display: table-cell; vertical-align: middle; text-align: center;">
@@ -64,17 +64,20 @@
                                             <td class="footable-last-visible" style="display: table-cell;">
                                                 <a href="{{ route('admin.edit', $admin->id) }}"
                                                     class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-edit"></i></a>
-                                               
 
-                                                        <form action="{{ route('admin.destroy', $admin->id) }}" method="POST" style="display:inline;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-default waves-effect waves-float btn-sm waves-red"
-                                                                onclick="return confirm('Are you sure you want to delete this admin?')">
-                                                                <i class="zmdi zmdi-delete"></i>
-                                                            </button>
-                                                        </form>
+
+                                                <form action="{{ route('admin.destroy', $admin->id) }}"
+                                                    method="POST"
+                                                    class="delete-form"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                            class="btn btn-default waves-effect waves-float btn-sm waves-red">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </button>
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @empty

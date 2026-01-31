@@ -33,28 +33,27 @@
 <script src="{{ asset('assets/coustom/js/sweetalert.min.js') }}"></script>
 
 <script>
-    $(document).on("click", "#delete", function(e) {
+    $(document).on("submit", ".delete-form", function(e) {
         e.preventDefault();
-        var link = $(this).attr("href");
+
+        let form = this;
 
         swal({
-                title: "Are you sure To Delete?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    window.location.href = link;
-
-                } else {
-                    swal("Your imaginary file is safe!");
-                }
-
-            });
+            title: "Are you sure?",
+            text: "Once deleted, this cannot be recovered!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit(); // ✅ real DELETE request
+            } else {
+                swal("Your data is safe!");
+            }
+        });
     });
 </script>
+
 
 <script>
     $(document).on("click", "#block", function(e) {
