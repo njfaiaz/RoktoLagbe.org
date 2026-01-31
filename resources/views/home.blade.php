@@ -187,7 +187,10 @@
                                             View Profile
                                         </button>
 
-                                        <button class="btn message">Message</button>
+                                        <button class="btn message"
+                                            onclick="handleViewProfileShow('{{ $loggedInUserProfileComplete ? 'yes' : 'no' }}', '{{ route('user.support') }}')">
+                                            Contact
+                                        </button>
                                     </div>
 
                                     @php
