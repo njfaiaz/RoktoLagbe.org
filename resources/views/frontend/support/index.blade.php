@@ -14,21 +14,20 @@
         }
 
         #notfound {
-            position: relative;
-            height: 100vh;
+            height: 30vh;
         }
 
         #notfound .notfound {
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: 20%;
             -webkit-transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
 
         .notfound {
-            max-width: 410px;
+            max-width: 800px;
             width: 100%;
             text-align: center;
         }
@@ -84,5 +83,36 @@
             </a>
         </div>
     </div>
+
+    <div class="card-container py-3">
+
+        @foreach ($admins as $admin)
+            <div class="card bg-white admin-card">
+                <div class="body text-center">
+
+                    <!-- Top Design Strip -->
+                    <div class="cover_bg_image admin-bg">
+                        <h3 class="admin-name">{{ $admin->name }}</h3>
+                    </div>
+
+                    <!-- Avatar -->
+                    <div class="admin-avatar">
+                        <img src="{{ asset('images/profile_av.jpg') }}" alt="Admin Avatar">
+                    </div>
+
+                    <!-- Info -->
+                    <div class="admin-info">
+                        <p class="admin-number">
+                            <i class='bx bx-id-card'></i>
+                            Admin Phone Number: <strong>{{ $admin->phone_number }}</strong>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        @endforeach
+
+    </div>
+
 
 @endsection

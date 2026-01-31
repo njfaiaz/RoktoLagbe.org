@@ -312,18 +312,20 @@
                         </div>
 
                         <div class="col-lg-12 col-md-12 py-2">
-                            <label></label>
-                            <div class="form-group">
+                        <label class="text-start">
+
+                            </label>
+                                <div class="form-group">
                                 @php
                                     $today = date('Y-m-d');
                                 @endphp
 
-                                <input type="date"
+                                <input type="date" placeholder="Previous Donation Date"
                                     class="form-control @error('previous_donation_date') border border-danger @enderror"
                                     name="previous_donation_date"
                                     value="{{ old('previous_donation_date', $profile->previous_donation_date ?? '') }}"
                                     max="{{ $today }}" required type="date"
-                                    placeholder="Previous Donation Date">
+                                    >
                                 @error('previous_donation_date')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

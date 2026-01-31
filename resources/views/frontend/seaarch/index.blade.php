@@ -99,7 +99,10 @@
                                         View Profile
                                     </button>
 
-                                    <button class="btn message">Message</button>
+                                    <button class="btn message"
+                                        onclick="handleViewProfile('{{ $loggedInUserProfileComplete ? 'yes' : 'no' }}', '{{ route('user.support') }}')">
+                                        Contact
+                                    </button>
                                 </div>
 
 

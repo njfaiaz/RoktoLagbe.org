@@ -1,4 +1,4 @@
-<footer class="text-center text-muted mt-4 pt-5 pb-5 border-top">
+{{-- <footer class="text-center text-muted mt-4 pt-5 pb-5 border-top">
     <p class="mb-0 px-3">
         Hosted by
         <a href="https://univahost.com" target="_blank" class="text-decoration-none fw-semibold text-dark fw-bold">
@@ -12,4 +12,4 @@
     <div class="mt-4">
 
     </div>
-</footer>
+</footer> --}}
