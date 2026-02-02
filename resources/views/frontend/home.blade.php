@@ -42,7 +42,7 @@
 
                                     <button class="btn message"
                                         onclick="handleViewProfileShow('{{ $loggedInUserProfileComplete ? 'yes' : 'no' }}', '{{ route('user.support') }}')">
-                                        Message
+                                        Contact
                                 </button>
                                 </div>
 

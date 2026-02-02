@@ -260,7 +260,7 @@
 
                                 <input type="file" id="imageUpload" name="image" class="dropify"
                                     data-max-file-size="2M"
-                                    data-default-file="{{ optional($profile)->image ? asset($profile->image) : asset('images/profile_av.jpg') }}"
+                                    data-default-file="{{ optional($profile)->image ? asset($profile->image) : '' }}"
                                     data-msg-placeholder="Upload your Profile" />
 
                             </div>
