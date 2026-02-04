@@ -76,8 +76,11 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Phone</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ $user->profiles->phone_number ?? 'N/A' }}
+                            <div class="col-sm-9 text-success">                                
+                                   <a href="{{ route('user.support') }}">
+                                        01*********
+                                    </a>                                
+                                {{-- {{ $user->profiles->phone_number ?? 'N/A' }} --}}
                             </div>
                         </div>
                         <hr>
