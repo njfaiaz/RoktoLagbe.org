@@ -9,14 +9,6 @@
             margin: 0 auto;
             border-radius: 5%;
         }
-
-        dl,
-        ol,
-        ul {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            margin-left: -38px;
-        }
     </style>
 @endpush
 

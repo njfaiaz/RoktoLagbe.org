@@ -41,7 +41,8 @@
                     </li>
 
                     <li class="nav__item">
-                        <a href="support.html" class="nav__link {{ request()->is('support') ? 'active-link' : '' }}">
+                        <a href="{{ route('user.support') }}"
+                            class="nav__link {{ request()->is('user.support') ? 'active-link' : '' }}">
                             <i class='bx bx-support nav__icon'></i>
                             <span class="nav__name">Support</span>
                         </a>
@@ -50,6 +51,9 @@
                 </ul>
 
             </div>
+
+
+
             @php
                 $user = auth()->user();
                 $profileImage =
@@ -62,6 +66,8 @@
                 <img src="{{ $profileImage }}" width="60" height="60">
             </div>
 
+
+
             <!--------------------- setting-menu ---------------------------------------->
             <div class="setting-menu">
                 <div id="dark-btn">
@@ -70,7 +76,8 @@
                 <div class="setting-menu-inner">
                     <div class="user-profile">
                         <a href="{{ route('user.profile') }}">
-                            <img src="{{ $profileImage }}" width="60" height="60"></a>
+                            <img src="{{ $profileImage }}" width="60" height="60"
+                                alt="Profile of {{ $user->name }}"></a>
                         <div>
                             <p> {{ $user->name ?? 'Guest' }} </p>
                             <a href="{{ route('user.profile') }}">See Your Profile

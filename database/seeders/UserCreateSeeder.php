@@ -18,11 +18,14 @@ class UserCreateSeeder extends Seeder
             'username' => 'Junayed-Rahman-Faiaz',
             'email' => 'njfaiaz@gmail.com',
             'role' => UserRole::SUPER_ADMIN->value,
-            'password' => Hash::make('Faiaz@#1234'),
+            'password' => Hash::make('Njfaiaz@12'),
         ]);
 
         $users = [
             "user",
+            "faiaz",
+            "sifat",
+            "junayed"
         ];
 
         foreach ($users as $user) {

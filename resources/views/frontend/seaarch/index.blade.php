@@ -83,9 +83,10 @@
                                 </div>
 
                                 @if ($user->profiles && $user->profiles->image)
-                                    <img src="{{ asset($user->profiles->image) }}" width="60" height="60" />
+                                    <img src="{{ asset($user->profiles->image) }}" width="60" height="60"
+                                        alt="Profile of {{ $user->name }}" />
                                 @else
-                                    <span>No Image</span>
+                                    <img src="{{ asset('images/profile_av.jpg') }}">
                                 @endif
 
                                 <p>{{ $user->addresses->district->district_name ?? 'N/A' }},
@@ -98,7 +99,10 @@
                                         View Profile
                                     </button>
 
-                                    <button class="btn message">Message</button>
+                                    <button class="btn message"
+                                        onclick="handleViewProfile('{{ $loggedInUserProfileComplete ? 'yes' : 'no' }}', '{{ route('user.support') }}')">
+                                        Contact
+                                    </button>
                                 </div>
 
 
@@ -146,12 +150,10 @@
             </div>
 
             <!-- Pagination -->
-            <div class="card mt-5">
-                <div class="">
-                    <ul class="pagination pagination-primary m-b-0">
-                        {{ $users->links('pagination::bootstrap-4') }}
-                    </ul>
-                </div>
+            <div class="my-3">
+                <ul class="pagination pagination-primary m-b-0 justify-content-start">
+                    {{ $users->links('pagination::bootstrap-4') }}
+                </ul>
             </div>
 
         </main>
@@ -175,131 +177,160 @@
             }
         </script>
 
-        <script>
-            document.getElementById('district').addEventListener('input', function() {
-                // Fetch and display suggestions in #district-list
-            });
-        </script>
-        <script>
-            let selectedDistrictId = "{{ request()->query('district_id') ?? '' }}";
-            let selectedUpazilaId = "{{ request()->query('upazila_id') ?? '' }}";
-            let selectedUnionId = "{{ request()->query('union_id') ?? '' }}"; // Store initial union ID
+<script>
+    let selectedDistrictId = "{{ request()->query('district_id') ?? '' }}";
+    let selectedUpazilaId = "{{ request()->query('upazila_id') ?? '' }}";
+    let selectedUnionId = "{{ request()->query('union_id') ?? '' }}";
 
-            $(document).ready(function() {
-                // District search
-                $('#district').on('keyup', function() {
-                    let query = $(this).val();
-                    $.ajax({
-                        url: '/search-districts',
-                        type: 'GET',
-                        data: {
-                            query
-                        },
-                        success: function(data) {
-                            $('#district-list').empty();
-                            if (data.length === 0) {
-                                $('#district-list').hide(); // Hide list if no data
-                            } else {
-                                $('#district-list').show(); // Show list if data exists
-                                data.forEach(district => {
-                                    $('#district-list').append(
-                                        `<li class="form-control" data-id="${district.id}">${district.district_name}</li>`
-                                    );
-                                });
-                            }
-                        }
-                    });
-                });
+    $(document).ready(function() {
 
-                // Select District
-                $(document).on('click', '#district-list li', function() {
-                    let districtId = $(this).data('id');
-                    $('#district').val($(this).text());
-                    $('#district_id').val(districtId);
+        // ----------------- District -----------------
+        $('#district').on('keyup', function() {
+            let query = $(this).val();
+            $('#district_id').val('');
+            selectedDistrictId = '';
+
+            // Clear child fields
+            $('#upazila').val('');
+            $('#upazila_id').val('');
+            $('#union').val('');
+            $('#union_id').val('');
+            selectedUpazilaId = '';
+            selectedUnionId = '';
+            $('#upazila-list').empty().hide();
+            $('#union-list').empty().hide();
+
+            if (query.length === 0) {
+                $('#district-list').empty().hide();
+                return;
+            }
+
+            $.ajax({
+                url: '/search-districts',
+                type: 'GET',
+                data: { query },
+                success: function(data) {
                     $('#district-list').empty();
-                    selectedDistrictId = districtId;
-                });
-
-                // Upazila search
-                $('#upazila').on('keyup', function() {
-                    let query = $(this).val();
-                    if (!selectedDistrictId) return;
-
-                    $.ajax({
-                        url: '/search-upazilas',
-                        type: 'GET',
-                        data: {
-                            query,
-                            district_id: selectedDistrictId
-                        },
-                        success: function(data) {
-                            $('#upazila-list').empty();
-                            if (data.length > 0) {
-                                // Show the list if there are results
-                                $('#upazila-list').show();
-                                data.forEach(upazila => {
-                                    $('#upazila-list').append(
-                                        `<li class="form-control" data-id="${upazila.id}">${upazila.upazila_name}</li>`
-                                    );
-                                });
-                            } else {
-                                // Hide the list if no results are found
-                                $('#upazila-list').hide();
-                            }
-                        }
-                    });
-                });
-
-
-                // Select Upazila
-                $(document).on('click', '#upazila-list li', function() {
-                    let upazilaId = $(this).data('id');
-                    $('#upazila').val($(this).text());
-                    $('#upazila_id').val(upazilaId);
-                    $('#upazila-list').empty();
-                    selectedUpazilaId = upazilaId;
-                });
-
-                // Union search
-                $('#union').on('keyup', function() {
-                    let query = $(this).val();
-                    $('#union_id').val(''); // Clear old union_id on every keyup
-
-                    if (!selectedUpazilaId) return;
-
-                    $.ajax({
-                        url: '/search-unions',
-                        type: 'GET',
-                        data: {
-                            query,
-                            upazila_id: selectedUpazilaId
-                        },
-                        success: function(data) {
-                            $('#union-list').empty();
-                            if (data.length === 0) {
-                                $('#union-list').hide(); // Hide list if no data
-                            } else {
-                                $('#union-list').show(); // Show list if data exists
-                                data.forEach(union => {
-                                    $('#union-list').append(
-                                        `<li class="form-control" data-id="${union.id}">${union.union_name}</li>`
-                                    );
-                                });
-                            }
-                        }
-                    });
-                });
-
-                // Select Union
-                $(document).on('click', '#union-list li', function() {
-                    let unionId = $(this).data('id');
-                    $('#union').val($(this).text());
-                    $('#union_id').val(unionId);
-                    $('#union-list').empty();
-                    selectedUnionId = unionId;
-                });
-
+                    if (data.length > 0) {
+                        data.forEach(district => {
+                            $('#district-list').append(
+                                `<li class="list-group-item list-group-item-action" data-id="${district.id}">${district.district_name}</li>`
+                            );
+                        });
+                        $('#district-list').show();
+                    } else {
+                        $('#district-list').hide();
+                    }
+                }
             });
-        </script>
+        });
+
+        $(document).on('click', '#district-list li', function() {
+            let districtId = $(this).data('id');
+            $('#district').val($(this).text());
+            $('#district_id').val(districtId);
+            $('#district-list').empty().hide();
+
+            // Clear child fields
+            $('#upazila').val('');
+            $('#upazila_id').val('');
+            $('#union').val('');
+            $('#union_id').val('');
+            selectedDistrictId = districtId;
+            selectedUpazilaId = '';
+            selectedUnionId = '';
+        });
+
+        // ----------------- Upazila -----------------
+        $('#upazila').on('keyup', function() {
+            let query = $(this).val();
+            $('#upazila_id').val('');
+            selectedUpazilaId = '';
+
+            // Clear union
+            $('#union').val('');
+            $('#union_id').val('');
+            selectedUnionId = '';
+            $('#union-list').empty().hide();
+
+            if (!selectedDistrictId || query.length === 0) {
+                $('#upazila-list').empty().hide();
+                return;
+            }
+
+            $.ajax({
+                url: '/search-upazilas',
+                type: 'GET',
+                data: { query, district_id: selectedDistrictId },
+                success: function(data) {
+                    $('#upazila-list').empty();
+                    if (data.length > 0) {
+                        data.forEach(upazila => {
+                            $('#upazila-list').append(
+                                `<li class="list-group-item list-group-item-action" data-id="${upazila.id}">${upazila.upazila_name}</li>`
+                            );
+                        });
+                        $('#upazila-list').show();
+                    } else {
+                        $('#upazila-list').hide();
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '#upazila-list li', function() {
+            let upazilaId = $(this).data('id');
+            $('#upazila').val($(this).text());
+            $('#upazila_id').val(upazilaId);
+            $('#upazila-list').empty().hide();
+
+            // Clear union
+            $('#union').val('');
+            $('#union_id').val('');
+            selectedUpazilaId = upazilaId;
+            selectedUnionId = '';
+        });
+
+        // ----------------- Union -----------------
+        $('#union').on('keyup', function() {
+            let query = $(this).val();
+            $('#union_id').val('');
+            selectedUnionId = '';
+
+            if (!selectedUpazilaId || query.length === 0) {
+                $('#union-list').empty().hide();
+                return;
+            }
+
+            $.ajax({
+                url: '/search-unions',
+                type: 'GET',
+                data: { query, upazila_id: selectedUpazilaId },
+                success: function(data) {
+                    $('#union-list').empty();
+                    if (data.length > 0) {
+                        data.forEach(union => {
+                            $('#union-list').append(
+                                `<li class="list-group-item list-group-item-action" data-id="${union.id}">${union.union_name}</li>`
+                            );
+                        });
+                        $('#union-list').show();
+                    } else {
+                        $('#union-list').hide();
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', '#union-list li', function() {
+            let unionId = $(this).data('id');
+            $('#union').val($(this).text());
+            $('#union_id').val(unionId);
+            $('#union-list').empty().hide();
+            selectedUnionId = unionId;
+        });
+
+    });
+</script>
     @endpush
 @endsection

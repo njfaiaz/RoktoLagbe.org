@@ -1,6 +1,18 @@
 @extends('app')
 @section('title', 'Profile')
-
+@push('style')
+    <style>
+        .no-donation-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            text-align: center;
+            font-weight: 800;
+            color: #050505;
+        }
+    </style>
+@endpush
 
 
 @section('frontend_content')
@@ -11,11 +23,14 @@
                     <img class="card-img-top" src="{{ asset('assets/frontend/img/cover.jpg') }}" alt="Card image cap">
                     <div class="card-body little-profile text-center">
                         <div class="pro-img">
+
                             @if ($user->profiles && $user->profiles->image)
-                                <img src="{{ asset($user->profiles->image) }}" width="60" height="60" />
+                                <img src="{{ asset($user->profiles->image) }}" width="60" height="60"
+                                    alt="Profile of {{ $user->name }}" />
                             @else
-                                <img src="{{ asset('assets/frontend/img/profile-pic.png') }}">
+                                <img src="{{ asset('images/profile_av.jpg') }}">
                             @endif
+
                         </div>
                         <h3 class="m-b-0">{{ $user->name }}</h3>
                         <p>{{ $user->profiles->bloods->blood_name ?? 'N/A' }} <Strong>Blood Donar</Strong></p>
@@ -164,7 +179,7 @@
                         </div>
                     </li>
                 @empty
-                    <li>
+                    <li class="no-donation-message">
                         <p>No donation history found.</p>
                     </li>
                 @endforelse

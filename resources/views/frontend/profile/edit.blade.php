@@ -5,10 +5,61 @@
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/bootstrap-select/css/bootstrap-select.css') }}">
     <style>
         .dropify-wrapper {
-            height: 180px;
-            width: 180px;
+            height: 114px !important;
+            width: 114px !important;
             margin: 0 auto;
-            border-radius: 5%;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 !important;
+        }
+
+        .dropify-wrapper .dropify-preview {
+            width: 100%;
+            height: 100% !important;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .dropify-wrapper .dropify-preview .dropify-render img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            margin: 0 !important;
+            padding: 0 !important;
+            vertical-align: middle;
+        }
+
+        .dropify-wrapper .dropify-preview .dropify-render {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .dropify-wrapper .dropify-clear {
+            display: none;
+            position: absolute;
+            opacity: 0;
+            z-index: 7;
+            top: 50px;
+            right: 20px;
+            background: 0 0;
+            border: 2px solid #FFF;
+            text-transform: uppercase;
+            font-size: 10px;
+            padding: 1px 10px;
+            font-weight: 700;
+            color: #FFF;
+            -webkit-transition: all .15s linear;
+            transition: all .15s linear;
         }
 
         dl,
@@ -17,6 +68,42 @@
             margin-top: 0;
             margin-bottom: 1rem;
             margin-left: -38px;
+        }
+
+        @media screen and (max-width: 767px) {
+            .dropify-wrapper {
+                height: 90px !important;
+                width: 100px !important;
+            }
+
+            .dropify-wrapper .dropify-preview {
+                height: 90px !important;
+                width: 90px !important;
+            }
+
+            .dropify-wrapper .dropify-preview .dropify-render img {
+                height: 100%;
+                width: 100%;
+            }
+
+            .dropify-wrapper .dropify-clear {
+                top: 40px;
+                right: 15px;
+            }
+
+            .dropify-wrapper.touch-fallback {
+                height: 100px !important;
+            }
+
+            .dropify-wrapper .dropify-message {
+                position: sticky;
+            }
+
+            dl,
+            ol,
+            ul {
+                margin-left: -28px;
+            }
         }
     </style>
 @endpush
@@ -160,94 +247,101 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-12 ">
-            <div class="card bg-white">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card bg-white shadow-sm">
                 <div class="body p-4">
-                    <h5><strong>Basic</strong> Settings</h5>
+
+                    <h5 class="mb-4"><strong>Basic</strong> Settings</h5>
+
                     <form action="{{ route('user.profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        <div class="col-lg-12 col-md-12">
-                            <div class="form-group">
-
-                                <input type="file" id="imageUpload" name="image" class="dropify"
-                                    data-max-file-size="2M"
-                                    data-default-file="{{ optional($profile)->image ? asset($profile->image) : '' }}"
-                                    data-msg-placeholder="Upload your Profile" />
-                            </div>
+                        <!-- Profile Image -->
+                        <div class="mb-4">
+                            <input type="file"
+                                id="imageUpload"
+                                name="image"
+                                class="dropify"
+                                data-max-file-size="2M"
+                                data-default-file="{{ optional($profile)->image ? asset($profile->image) : '' }}"
+                                data-msg-placeholder="Upload your Profile">
                         </div>
 
-
-                        <div class="col-lg-12 col-md-12">
-                            <label></label>
-                            <div class="form-group">
-                                <input type="text" name="phone_number" type="number"
-                                    value="{{ old('phone_number', $profile->phone_number ?? '') }}"
-                                    class="form-control @error('phone_number') border border-danger @enderror"
-                                    placeholder="Phone Number">
-                                @error('phone_number')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <!-- Phone Number -->
+                        <div class="mb-3">
+                            <input type="text"
+                                name="phone_number"
+                                id="phone_number"
+                                value="{{ old('phone_number', $profile->phone_number ?? '') }}"
+                                class="form-control @error('phone_number') is-invalid @enderror"
+                                placeholder="Enter phone number" required>
+                            @error('phone_number')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="col-lg-12 col-md-12">
-                            <label></label>
-                            <div class="form-group">
-                                <select name="gender" id="gender" class="form-control" required>
-                                    <option disabled>Select Gender</option>
-                                    <option value="Male"
-                                        {{ isset($profile->gender) && $profile->gender == 'Male' ? 'selected' : '' }}>
-                                        Male</option>
-                                    <option value="Female"
-                                        {{ isset($profile->gender) && $profile->gender == 'Female' ? 'selected' : '' }}>
-                                        Female</option>
-
-                                </select>
-                            </div>
+                        <div class="mb-3">
+                            <select name="gender"
+                                    id="gender"
+                                    class="form-select"
+                                    required>
+                                <option value="" disabled {{ empty($profile->gender) ? 'selected' : '' }}>
+                                    Select Gender
+                                </option>
+                                <option value="Male" {{ ($profile->gender ?? '') === 'Male' ? 'selected' : '' }}>
+                                    Male
+                                </option>
+                                <option value="Female" {{ ($profile->gender ?? '') === 'Female' ? 'selected' : '' }}>
+                                    Female
+                                </option>
+                            </select>
                         </div>
 
-                        <div class="col-lg-12 col-md-12">
-                            <label></label>
-                            <div class="form-group">
-                                <select name="blood_id" id="blood_group" class="form-control" required>
-                                    <option selected disabled>Select Your Blood Group</option>
-                                    @foreach ($bloods as $blood)
-                                        <option value="{{ $blood->id }}"
-                                            {{ old('blood_id', isset($profile) && $profile ? $profile->blood_id : null) == $blood->id || (empty($profile->blood_id) && $loop->first) ? 'selected' : '' }}>
-                                            {{ $blood->blood_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <!-- Blood Group -->
+                        <div class="mb-3">
+                            <select name="blood_id"
+                                    id="blood_group"
+                                    class="form-select"
+                                    required>
+                                <option value="" disabled {{ empty($profile->blood_id) ? 'selected' : '' }}>
+                                    Select Your Blood Group
+                                </option>
+                                @foreach ($bloods as $blood)
+                                    <option value="{{ $blood->id }}"
+                                        {{ old('blood_id', $profile->blood_id ?? '') == $blood->id ? 'selected' : '' }}>
+                                        {{ $blood->blood_name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        <div class="col-lg-12 col-md-12 py-2">
-                            <label></label>
-                            <div class="form-group">
-                                @php
-                                    $today = date('Y-m-d');
-                                @endphp
+                        <div class="mb-4">
+                            @php $today = date('Y-m-d'); @endphp
 
-                                <input type="date"
-                                    class="form-control @error('previous_donation_date') border border-danger @enderror"
-                                    name="previous_donation_date"
-                                    value="{{ old('previous_donation_date', $profile->previous_donation_date ?? '') }}"
-                                    max="{{ $today }}" required type="date"
-                                    placeholder="Previous Donation Date">
-                                @error('previous_donation_date')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <input type="text"
+                                name="previous_donation_date"
+                                id="previous_donation_date"
+                                class="form-control @error('previous_donation_date') is-invalid @enderror"
+                                placeholder="Previous Donation Date"
+                                value="{{ old('previous_donation_date', $profile->previous_donation_date ?? '') }}"
+                                max="{{ $today }}"
+                                onfocus="this.type='date'"
+                                onblur="if(!this.value)this.type='text'"
+                                required>
+
                         </div>
 
-                        <button type="submit" class="btn btn-info">Update Information</button>
+                        <button type="submit" class="btn btn-info px-4">
+                            Update Information
+                        </button>
+
                     </form>
+
                 </div>
             </div>
-
         </div>
+
+
 
     </div>
 

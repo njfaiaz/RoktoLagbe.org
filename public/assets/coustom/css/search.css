@@ -12,7 +12,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     background-color: white;
-    width: 100%;
+    width: max-content;
 }
 .filter-section select,
 .filter-section input[type="text"] {
@@ -40,13 +40,14 @@
     overflow-y: auto;
     position: fixed;
     z-index: 1000;
-    width: 15%;
+    width: 13%;
 }
 #upazila-list {
     max-height: 200px;
     overflow-y: auto;
     position: fixed;
     z-index: 1000;
+    width: 13%;
 }
 
 #union-list {
@@ -54,6 +55,7 @@
     overflow-y: auto;
     position: fixed;
     z-index: 1000;
+    width: 13%;
 }
 
 #district-list-donate {
@@ -108,6 +110,7 @@
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         gap: 5px;
+        width: auto;
     }
     .filter-section select {
         width: 100%;

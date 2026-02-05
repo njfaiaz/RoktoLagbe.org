@@ -1,7 +1,19 @@
 @extends('app')
 @section('title', 'Profile Show')
 
-
+@push('style')
+    <style>
+        .no-donation-message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            text-align: center;
+            font-weight: 800;
+            color: #050505;
+        }
+    </style>
+@endpush
 
 @section('frontend_content')
     <div class="padding">
@@ -12,9 +24,10 @@
                     <div class="card-body little-profile text-center">
                         <div class="pro-img">
                             @if ($user->profiles && $user->profiles->image)
-                                <img src="{{ asset($user->profiles->image) }}" width="60" height="60" />
+                                <img src="{{ asset($user->profiles->image) }}" width="60" height="60"
+                                    alt="Profile of {{ $user->name }}" />
                             @else
-                                <img src="{{ asset('assets/frontend/img/profile-pic.png') }}">
+                                <img src="{{ asset('images/profile_av.jpg') }}">
                             @endif
                         </div>
                         <h3 class="m-b-0">{{ $user->name }}</h3>
@@ -63,8 +76,11 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Phone</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                {{ $user->profiles->phone_number ?? 'N/A' }}
+                            <div class="col-sm-9 text-success">                                
+                                   <a href="{{ route('user.support') }}">
+                                        01*********
+                                    </a>                                
+                                {{-- {{ $user->profiles->phone_number ?? 'N/A' }} --}}
                             </div>
                         </div>
                         <hr>
@@ -164,7 +180,7 @@
                         </div>
                     </li>
                 @empty
-                    <li>
+                    <li class="no-donation-message">
                         <p>No donation history found.</p>
                     </li>
                 @endforelse

@@ -23,10 +23,12 @@
                                 </div>
 
                                 @if ($user->profiles && $user->profiles->image)
-                                    <img src="{{ asset($user->profiles->image) }}" width="60" height="60" />
+                                    <img src="{{ asset($user->profiles->image) }}" width="60" height="60"
+                                        alt="Profile of {{ $user->name }}" />
                                 @else
                                     <img src="{{ asset('images/profile_av.jpg') }}">
                                 @endif
+
 
                                 <p>{{ $user->addresses->district->district_name ?? 'N/A' }},
                                     {{ $user->addresses->upazila->upazila_name ?? 'N/A' }},
@@ -38,7 +40,10 @@
                                         View Profile
                                     </button>
 
-                                    <button class="btn message">Message</button>
+                                    <button class="btn message"
+                                        onclick="handleViewProfileShow('{{ $loggedInUserProfileComplete ? 'yes' : 'no' }}', '{{ route('user.support') }}')">
+                                        Contact
+                                </button>
                                 </div>
 
 
@@ -85,12 +90,10 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="card mt-5">
-                    <div class="">
-                        <ul class="pagination pagination-primary m-b-0">
-                            {{ $users->links('pagination::bootstrap-4') }}
-                        </ul>
-                    </div>
+                <div class="my-3">
+                    <ul class="pagination pagination-primary m-b-0 justify-content-start">
+                        {{ $users->links('pagination::bootstrap-4') }}
+                    </ul>
                 </div>
 
             </div>

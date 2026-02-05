@@ -8,17 +8,20 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserListController;
+use App\Http\Controllers\Admin\AdminCreateController;
 use App\Http\Controllers\Frontend\FrDonateInfoController;
 use App\Http\Controllers\Frontend\FrFakeUserController;
 use App\Http\Controllers\Frontend\FrHistoryController;
 use App\Http\Controllers\Frontend\FrProfileController;
 use App\Http\Controllers\Frontend\FrSearchController;
+use App\Http\Controllers\Frontend\FrSupportController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Artisan;
 
-Route::get('/', function () {
+Route::get('/dashboard', function () {
     if (Auth::check()) {
         if (Auth::user()->role == '1') {
             return redirect()->route('admin.dashboard');
@@ -26,9 +29,10 @@ Route::get('/', function () {
             return redirect()->route('user.dashboard');
         }
     } else {
-        return redirect()->route('login');
+        return view('home');;
     }
 });
+
 
 Route::fallback(function () {
     return view('404');
@@ -36,6 +40,7 @@ Route::fallback(function () {
 
 Auth::routes();
 
+Route::get('/', [UserController::class, 'gustView'])->name('gust.view');
 Route::get('404', [UserController::class, 'notFound'])->name('notFound');
 
 Route::post('password/change', [PasswordChangeController::class, 'ChangeStore'])->name('admin.password.change');
@@ -57,6 +62,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'auth'], 'namespace
     Route::get('search-upazilas', [ProfileController::class, 'searchUpazilas']);
     Route::get('search-unions', [ProfileController::class, 'searchUnions']);
 
+     // ------------------------------ Admin Create Page----------------------------------
+    Route::get('all/admin', [AdminCreateController::class, 'index'])->name('admin.all');
+    Route::get('admin/create', [AdminCreateController::class, 'create'])->name('admin.create');
+    Route::post('admin/store', [AdminCreateController::class, 'store'])->name('admin.store');
+    Route::get('admin/{admin}/edit', [AdminCreateController::class, 'edit'])->name('admin.edit');
+    Route::put('admin/{admin}', [AdminCreateController::class, 'update'])->name('admin.update');
+    Route::delete('admin/{admin}', [AdminCreateController::class, 'destroy'])->name('admin.destroy');
     // ------------------------------ Admin Address Page----------------------------------
     Route::get('address', [AddressController::class, 'index'])->name('address');
 
@@ -77,8 +89,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin', 'auth'], 'namespace
     // ------------------------------ All User Blood Donate History Page----------------------------------
     Route::get('donate/history', [DonateHistoryController::class, 'index'])->name('donate.history');
 
-    // ------------------------------ Admin Role Page----------------------------------
-    Route::get('role', [RoleController::class, 'index'])->name('role');
 });
 
 
@@ -110,6 +120,9 @@ Route::group(['middleware' => ['user', 'auth'], 'namespace' => 'User'], function
     // ------------------------------ Frontend Search Page----------------------------------
     Route::get('history', [FrHistoryController::class, 'index'])->name('user.history');
     Route::get('history.store', [FrHistoryController::class, 'Store'])->name('user.history.store');
+
+    // ------------------------------ Frontend Support Page----------------------------------
+    Route::get('support', [FrSupportController::class, 'index'])->name('user.support');
 
     // ------------------------------ Frontend Search Page----------------------------------
     Route::middleware(['auth', 'check.next.donate'])->group(function () {

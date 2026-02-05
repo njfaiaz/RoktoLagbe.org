@@ -25,8 +25,6 @@
 
     </section>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-
     <script src="{{ asset('assets/login/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/login/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/login/js/popper.min.js') }}"></script>

@@ -314,7 +314,7 @@ main {
     position: fixed;
     z-index: 1000;
     width: 15%;
-    margin-left: -264px;
+    margin-left: -233px;
 }
 .input-container {
     position: relative;
@@ -345,7 +345,7 @@ main {
     position: fixed;
     z-index: 1000;
     width: 15%;
-    margin-left: -264px;
+    margin-left: -233px;
 }
 
 #union-list {
@@ -354,7 +354,7 @@ main {
     position: fixed;
     z-index: 1000;
     width: 15%;
-    margin-left: -264px;
+    margin-left: -233px;
 }
 
 #district-list-donate {

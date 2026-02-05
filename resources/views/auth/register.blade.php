@@ -83,6 +83,20 @@
                             As a member?
                             <a data-toggle="tab" href="{{ route('login') }}">Log In</a>
                         </p>
+                        <footer class="text-center text-muted border-top">
+                            <p class="mt-3">
+                                Hosted by
+                                <a href="https://univahost.com" target="_blank"
+                                    class="text-decoration-none fw-semibold text-dark fw-bold">
+                                    Univahost
+                                </a>
+                                &
+                                <a href="https://namepart.com" target="_blank"
+                                    class="text-decoration-none fw-semibold text-dark fw-bold">
+                                    Namepart
+                                </a>
+                            </p>
+                        </footer>
                     </div>
                 </div>
             </div>
@@ -92,19 +106,23 @@
 
     @push('footer_scripts')
         <script>
-            let password = document.getElementById('password');
-            let togglepassword = document.getElementById('toggle');
+    let password = document.getElementById('password');
+    let confirmPassword = document.getElementById('password-confirm');
+    let togglepassword = document.getElementById('toggle');
 
-            function showhide() {
-                if (password.type === 'password') {
-                    password.setAttribute('type', 'text');
-                    togglepassword.classList.add('hide')
-                } else {
-                    password.setAttribute('type', 'password');
-                    togglepassword.classList.remove('hide')
-                }
-            }
-        </script>
+    function showhide() {
+        if (password.type === 'password') {
+            password.type = 'text';
+            confirmPassword.type = 'text';
+            togglepassword.classList.add('hide');
+        } else {
+            password.type = 'password';
+            confirmPassword.type = 'password';
+            togglepassword.classList.remove('hide');
+        }
+    }
+</script>
+
     @endpush
 @endsection
 
