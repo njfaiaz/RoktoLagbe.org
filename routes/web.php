@@ -38,17 +38,6 @@ Route::fallback(function () {
     return view('404');
 });
 
-Route::get('/video', function () {
-    return '
-        <div style="max-width: 800px; margin: auto;">
-            <iframe src="https://drive.google.com/file/d/1gpSkHe2io9OZ8y_JwHYeo7jSbJtm3kjb/preview" width="100%" height="480" allow="autoplay"></iframe>
-        </div>
-    ';
-});
-
-
-
-
 Auth::routes();
 
 Route::get('/', [UserController::class, 'gustView'])->name('gust.view');
